@@ -1,0 +1,63 @@
+{{> header user=user}}
+
+<div class="products-page">
+
+    {{!-- Contenedor princial del HTLM Para Cargar la lista de productos --}}
+    <div class="product-list">
+
+        {{!-- Este es un for para presentar los productos por HTML --}}
+        {{#each products}}
+
+
+        {{!-- Contenedor Presentar Cada Producto como tarjeta con "bootstrap";
+        - tiene un atributo que define las linea del borde--}}
+        <div class="product card" style="width: 18rem;">
+
+            {{!-- validacion: Si no llega una imagen, muestra la imagen "work-in-progress. --}}
+            {{#if product.thumbnail}}
+            <img src="{{product.thumbnail}}" class="card-img-top prd-img" alt="...">
+            {{else}}
+            <img src="/static/img/work-in-progress.png" alt="...">
+            {{/if}}
+
+            {{!-- Contenedort hijo para colocar los datos del producto en la tarjeta --}}
+            <div class="card-body" data-pid="{{product._id}}">
+
+                {{!-- Titulo del Producto --}}
+                <h5 class="card-title">{{product.title}}</h5>
+
+                {{!-- Descripcion del Producto --}}
+                <p class="card-text">{{product.description}}</p>
+                <p class="card-text">Stock: {{product.stock}}</p>
+
+                {{!-- Contenedor Nieto para Agregar un boton que sume los productos al carrito --}}
+                <div class="prd-footer">
+
+                    {{!-- Mostrando el Precio del Producto --}}
+                    <span class="display-6"> ${{product.price}} </span>
+                    <span class="display-6"> x {{cantidad}}</span>
+
+                </div>
+                {{#if invalid}}
+                <div>
+                    <span>El stock de este producto no es suficiente</span>
+                </div>
+                {{/if}}
+                <div style="display: flex; flex-direction: row;">
+                    <a href="/cart/products/{{product.id}}" class="btn btn-primary">Modify</a>
+                    <a href="/cart/remove/{{product.id}}" class="btn btn-danger">Delete</a>
+                </div>
+
+            </div>
+
+        </div>
+        {{/each}}
+
+    </div>
+    
+    <div style="display: flex; flex-direction: column;">
+        <h2>Total a pagar: ${{total}}</h2>
+        <a href="/api/carts/purchase" class="btn btn-primary">Pagar</a>
+    </div>
+
+</div>

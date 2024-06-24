@@ -1,0 +1,14 @@
+{{> header user=user}}
+
+<div class="ticket-list-page container">
+    <h2>Lista de tickets</h2>
+    <div class="ticket-list d-flex flex-column">
+        {{#each tickets}}
+        <a href="/tickets/{{code}}" class="ticket-detail">
+            <div>{{purchase_datetime}}</div>
+            <div>{{code}}</div>
+            <div>${{amount}}</div>
+        </a>
+        {{/each}}
+    </div>
+</div>
